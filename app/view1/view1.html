@@ -17,23 +17,25 @@
 </section>
 <section class="registration">
     <h2 class="registration__head_text">Registration form</h2>
-    <form name="regForm" class="registration__form" method="post" autocomplete="off" role="form" ng-controller="RegCtrl">
+    <form name="regForm" class="registration__form" method="post" autocomplete="off" role="form" ng-controller="View1Ctrl">
         <ul class="reg__list">
             <li class="reg__item">
                 <div class="reg__item_title">Name:</div>
-                <input type="text" class="reg__item_input"></li>
+                <input type="text" name="name" class="reg__item_input"></li>
             <li class="reg__item">
                 <div class="reg__item_title">Surname:</div>
-                <input type="text" class="reg__item_input"></li>
+                <input type="text" name="surname" class="reg__item_input"></li>
             <li class="reg__item">
                 <div class="reg__item_title">Email:</div>
-                <input type="text" class="reg__item_input"></li>
+                <input type="email" name="email" class="reg__item_input"></li>
             <li class="reg__item">
                 <div class="reg__item_title">Phone:</div>
-                <input type="text" class="reg__item_input"></li>
+                <input type="text" name="phone" class="reg__item_input"
+                       ng-keypress = "getChar($event, 'number')" placeholder="380xxxxxxxxx" maxlength="12"></li>
             <li class="reg__item">
                 <div class="reg__item_title">Birthday:</div>
-                <input type="text" class="reg__item_input"></li>
+                <input type="date" name="date" class="reg__item_input"
+                       ng-keypress = "getChar($event, 'number')" placeholder="dd.mm.year"></li>
         </ul>
         <button type="button" class="reg_button">Save</button>
     </form>
@@ -41,7 +43,7 @@
 <section class="data">
     <ul class="data__list">
         <li class="data_item" ng-repeat="participant in participants">
-            [{$index+1{}}] {{participant.surname}} {{participant.name}}, {{participant.email}},
+            [{{$index+1}}] {{participant.surname}} {{participant.name}}, {{participant.email}},
             {{participant.phone}}, {{participant.date}}
         </li>
     </ul>
