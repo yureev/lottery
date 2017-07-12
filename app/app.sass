@@ -1,8 +1,61 @@
-/* app css stylesheet */
+@mixin clearfix()
+  &:before, &:after
+    content: ""
+    display: table
+
+  &:after
+    clear: both
+
+@mixin placeholder($color: #000000)
+  &::-webkit-input-placeholder
+    color: $color
+  &:-moz-placeholder
+    color: $color
+  &::-moz-placeholder
+    color: $color
+  &:-ms-input-placeholder
+    color: $color
+
+@mixin border-radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius: $radius
+  -ms-border-radius: $radius
+  border-radius: $radius
+
+html
+  width: 100%
+  height: 100%
+
+ul
+  padding: 0
+  margin: 0
+
+  li
+    list-style: none
+
+p
+  padding: 0
+  margin: 0
+
+a
+  text-decoration: none
+  cursor: pointer
+
+*
+  box-sizing: border-box
+
+button
+  background-color: #da7074
+  @include border-radius(50px)
+  height: 40px
+  width: 110px
+  outline: none
 
 body
   font-family: Arial, sans-serif
   font-size: 16px
+  //background: url("./assets/image/back_lottery.jpeg") repeat-y 100%
+  height: 100%
 
 
 .menu
@@ -31,4 +84,46 @@ body
 .header
   text-align: center
   font-size: 2em
+section
+  margin: 20px
+
+.winners
+  .win__list
+    @include clearfix()
+    width: 600px
+    margin: auto
+    text-align: center
+    .win__item
+      float: left
+      width: 33%
+      line-height: 2.5
+
+
+
+.registration
+  text-align: center
+  .registration__form
+    width: 600px
+    margin: auto
+
+    .reg__item
+      @include clearfix()
+      margin-bottom: 10px
+
+      .reg__item_title
+        float: left
+        width: 20%
+        text-align: right
+        padding-right: 10px
+      .reg__item_input
+        float: left
+        width: 80%
+
+
+
+
+
+
+.footer
+  text-align: center
 
