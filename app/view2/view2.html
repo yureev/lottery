@@ -1,5 +1,25 @@
-<p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<div class="windata">
+  <section class="winners">
+    <ul class="win__list">
+      <li class="win__item">
+        <p class="win__item_text">Winners:</p>
+      </li>
+      <li class="win__item">
+        <p class="win__item_name">Name</p>
+      </li>
+      <li class="win__item">
+        <button type="button" class="win__item_button">New winner</button></li>
+    </ul>
+
+  </section>
+  <section class="data">
+    <ul class="data__list">
+      <li class="data_item" ng-repeat="participant in participants">
+        [{{$index+1}}] {{participant.surname}} {{participant.name}}, {{participant.email}},
+        {{participant.phone}}, {{participant.date}}
+      </li>
+    </ul>
+
+  </section>
+</div>
+

@@ -56,69 +56,82 @@ body
   font-size: 16px
   background: url("./assets/image/back_lottery.jpeg") repeat-y 100%
   height: 100%
+  min-width: 620px
+
+  .wrapper
+    min-height: 100%
+    overflow: hidden
+    position: relative
+    padding: 10px
+    color: #000
+
+    .header
+      text-align: center
+      font-size: 2em
+
+    .menu
+      list-style: none
+      margin-bottom: 2em
+      padding: 0 0 0.5em
+      text-align: center
+
+    .menu > li
+      display: inline
+    section
+      margin: 20px
+
+    .winners
+      .win__list
+        @include clearfix()
+        width: 600px
+        margin: auto
+        text-align: center
+        .win__item
+          float: left
+          width: 33%
+          //line-height: 2.5
 
 
-.menu
-  list-style: none
-  border-bottom: 0.1em solid black
-  margin-bottom: 2em
-  padding: 0 0 0.5em
+    .registration
+      text-align: center
+      .registration__form
+        width: 600px
+        margin: auto
 
+        .reg__item
+          @include clearfix()
+          margin-bottom: 20px
 
-.menu:before
-  content: "["
+          .reg__item_title
+            float: left
+            width: 13%
+            text-align: right
+            padding-right: 10px
+          .reg__item_input
+            float: left
+            width: 87%
 
+          .reg__item_error
+            height: 20px
+            color: red
+            text-align: center
+            font-size: 12px
 
-.menu:after
-  content: "]"
-
-
-.menu > li
-  display: inline
-
-
-.menu > li + li:before
-  content: "|"
-  padding-right: 0.3em
-
-.header
-  text-align: center
-  font-size: 2em
-section
-  margin: 20px
-
-.winners
-  .win__list
-    @include clearfix()
-    width: 600px
-    margin: auto
-    text-align: center
-    .win__item
-      float: left
-      width: 33%
-      line-height: 2.5
-
-
-.registration
-  text-align: center
-  .registration__form
-    width: 600px
-    margin: auto
-
-    .reg__item
-      @include clearfix()
-      margin-bottom: 10px
-
-      .reg__item_title
-        float: left
-        width: 20%
+      .save__reg
         text-align: right
-        padding-right: 10px
-      .reg__item_input
-        float: left
-        width: 80%
 
+    .empty
+      height: 90px
 
 .footer
+  height: 90px
+  margin-top: -90px
+  position: relative
+  font-size: 12px
+  color: #000
+  font-family: Georgia, sans-serif
   text-align: center
+  padding: 40px
+  .copyright_link
+    color: #ffffff
 

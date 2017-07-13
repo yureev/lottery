@@ -9,7 +9,8 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$scope', function($scope) {
+.controller('View1Ctrl', ['$rootScope', '$scope', function($rootScope, $scope) {
+    $rootScope.participants = [];
 
   // event.type должен быть keypress
   $scope.getChar = function (event, flag) {
@@ -48,6 +49,53 @@ angular.module('myApp.view1', ['ngRoute'])
       return event.preventDefault(); // цифры, буквы, пробел, слэш, дефис
     }
   };
+
+    $rootScope.regFormInfo = {};
+    $scope.validName = function() {
+        $scope.nameRequired = '';
+
+        if (!$scope.regFormInfo.name) {
+            $scope.nameRequired = 'Name Required';
+        }
+    };
+    $scope.validSurname = function() {
+        $scope.surnameRequired = '';
+
+        if (!$scope.regFormInfo.surname) {
+            $scope.surnameRequired = 'Surname Required';
+        }
+    };
+    $scope.validEmail = function() {
+        $scope.emailRequired = '';
+
+        if (!$scope.regFormInfo.mail) {
+            $scope.emailRequired = 'Mail Required';
+        }
+    };
+    $scope.validPhone = function() {
+        $scope.phoneRequired = '';
+
+        if (!$scope.regFormInfo.phone) {
+            $scope.phoneRequired = 'Password Required';
+        }
+    };
+    $scope.addParticipant = function() {
+        console.log($scope.regFormInfo);
+        $rootScope.participants.push($scope.regFormInfo);
+        console.log($rootScope.participants);
+        var i;
+        var obj = new Object();
+
+        for (i=0; i<$rootScope.participants.length; i++) {
+            obj.id = i+1;
+            obj.name = $rootScope.participants[i].name;
+            obj.surname = $rootScope.participants[i].surname;
+            obj.email = $rootScope.participants[i].email;
+
+        }
+        console.log(obj);
+
+    };
 
 
 }]);
