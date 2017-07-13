@@ -1,31 +1,53 @@
-<div class="registration">
+<div class="registration" ng-controller="View1Ctrl">
+    <div class="winners">
+        <ul class="win__list">
+            <li class="win__item">
+                <p class="win__item_text">Winners:</p>
+            </li>
+            <li class="win__item">
+                <p class="win__item_name"> {{winnerId}} {{winnerName}} {{winnerSurname}}</p>
+            </li>
+            <li class="win__item">
+                <button type="button" class="win__item_button" ng-click="win()">New winner</button></li>
+        </ul>
+
+    </div>
     <p class="registration__head_text">Registration form</p>
-    <form name="regForm" class="registration__form" method="post" autocomplete="off" role="form" ng-controller="View1Ctrl">
+    <form name="regForm" class="registration__form" method="post" autocomplete="off" role="form">
         <ul class="reg__list">
             <li class="reg__item">
                 <div class="reg__item_title">Name:</div>
-                <input type="text" name="name" class="reg__item_input" ng-blur="validName()" ng-model="regFormInfo.name" placeholder="Name" tabindex="1" required>
+                <input type="text" name="name" class="reg__item_input" ng-blur="validName()"
+                       ng-keypress = "getChar($event, 'letters')" ng-model="regFormInfo.name"
+                       placeholder="Name" tabindex="1" required maxlength="10"
+                       ng-class="{'reg__item_input_error' : (regForm.name.$invalid && regForm.name.$touched)}">
                 <div class="reg__item_error">
                     <span ng-show="(regForm.name.$invalid && regForm.name.$touched)">{{nameRequired}}</span>
                 </div>
             </li>
             <li class="reg__item">
                 <div class="reg__item_title">Surname:</div>
-                <input type="text" name="surname" class="reg__item_input" ng-blur="validSurname()" ng-model="regFormInfo.surname" placeholder="surname" tabindex="2" required>
+                <input type="text" name="surname" class="reg__item_input" ng-blur="validSurname()"
+                       ng-keypress = "getChar($event, 'letters')" ng-model="regFormInfo.surname"
+                       placeholder="surname" tabindex="2" required maxlength="15"
+                       ng-class="{'reg__item_input_error' : (regForm.surname.$invalid && regForm.surname.$touched)}">
                 <div class="reg__item_error">
                     <span ng-show="(regForm.surname.$invalid && regForm.surname.$touched)">{{surnameRequired}}</span>
                 </div>
             </li>
             <li class="reg__item">
                 <div class="reg__item_title">Email:</div>
-                <input type="email" name="email" class="reg__item_input"  ng-blur="validEmail()" ng-model="regFormInfo.email" placeholder="name@mail.com" tabindex="3" required>
+                <input type="email" name="email" class="reg__item_input"  ng-blur="validEmail()"
+                       ng-model="regFormInfo.email" placeholder="name@mail.com" tabindex="3" required
+                       ng-class="{'reg__item_input_error' : (regForm.email.$invalid && regForm.email.$touched)}">
                 <div class="reg__item_error">
                     <span ng-show="(regForm.email.$invalid && regForm.email.$touched)">{{emailRequired}}</span>
                 </div>
             </li>
             <li class="reg__item">
                 <div class="reg__item_title">Phone:</div>
-                <input type="text" name="phone" class="reg__item_input"  ng-blur="validPhone()" ng-model="regFormInfo.phone" placeholder="380xxxxxxxxx" tabindex="4"
+                <input type="text" name="phone" class="reg__item_input"  ng-blur="validPhone()"
+                       ng-model="regFormInfo.phone" placeholder="380xxxxxxxxx" tabindex="4"
                        ng-keypress = "getChar($event, 'number')"  maxlength="12">
                 <div class="reg__item_error">
                     <span ng-show="(regForm.phone.$invalid && regForm.phone.$touched)">{{phoneRequired}}</span>
@@ -33,40 +55,48 @@
             </li>
             <li class="reg__item">
                 <div class="reg__item_title">Birthday:</div>
-                <input type="text" name="date" class="reg__item_input" ng-blur="validDate()" ng-model="regFormInfo.date" placeholder="dd.mm.year" tabindex="5"
-                       ng-keypress = "getChar($event, 'number')"></li>
+                <input type="text" name="date" class="reg__item_input" ng-blur="validDate()"
+                       ng-model="regFormInfo.date" placeholder="dd.mm.year" tabindex="5"
+                       ng-keypress = "getChar($event, 'date')" maxlength="10">
+            </li>
         </ul>
         <div class="save__reg">
             <button type="button" class="save_reg_button" ng-click="addParticipant()" ng-disabled="regForm.$invalid" tabindex="6">Save</button>
         </div>
 
     </form>
-    {{regFormInfo}}
-    {{participants}}
 
-    <div class="windata">
-        <section class="winners">
-            <ul class="win__list">
-                <li class="win__item">
-                    <p class="win__item_text">Winners:</p>
-                </li>
-                <li class="win__item">
-                    <p class="win__item_name">Name</p>
-                </li>
-                <li class="win__item">
-                    <button type="button" class="win__item_button">New winner</button></li>
-            </ul>
+    <div class="data">
+        <ul class="data__list">
+            <li class="data__item" ng-repeat="participant in participants" >
+                <div ng-show="edit">
+                    <form name="editForm" class="edit__form" method="post" autocomplete="off" role="form">
+                        <input type="text" name="name" class="data_input" ng-model="participant.name" required ng-keypress = "getChar($event, 'letters')"
+                               ng-class="{'data__item_input_error' : (editForm.name.$invalid && editForm.name.$touched)}" maxlength="10">
+                        <input type="text" name="surname" class="data_input" ng-model="participant.surname" required ng-keypress = "getChar($event, 'letters')"
+                               ng-class="{'data__item_input_error' : (editForm.surname.$invalid && editForm.surname.$touched)}" maxlength="15">
+                        <input type="email" name="email" class="data_input" ng-model="participant.email" required
+                               ng-class="{'data__item_input_error' : (editForm.email.$invalid && editForm.email.$touched)}">
+                        <input type="text" name="phone" class="data_input" ng-model="participant.phone"
+                               ng-keypress = "getChar($event, 'number')"  maxlength="12">
+                        <input type="text" name="date" class="data_input" ng-model="participant.date"
+                               ng-keypress = "getChar($event, 'date')" maxlength="10">
 
-        </section>
-        <section class="data">
-            <ul class="data__list">
-                <li class="data_item" ng-repeat="participant in participants track by participant.name">
-                    {{$index+1}}. {{participant.surname}} {{participant.name}}, {{participant.email}},
-                    {{participant.phone}}, {{participant.date}}
-                </li>
-            </ul>
+                        <button type="button" class="data_button" ng-click="editParticipant()" ng-disabled="editForm.$invalid">Save</button>
+                    </form>
 
-        </section>
+
+                </div>
+
+                <div ng-show="!edit" ng-click="editParticipant()">
+                    {{$index+1}}. {{participant.name}} {{participant.surname}} {{participant.email}}
+                    {{participant.phone}} {{participant.date}}
+                </div>
+
+            </li>
+        </ul>
+
     </div>
+
 
 </div>

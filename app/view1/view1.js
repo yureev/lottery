@@ -10,11 +10,10 @@ angular.module('myApp.view1', ['ngRoute'])
 }])
 
 .controller('View1Ctrl', ['$rootScope', '$scope', function($rootScope, $scope) {
-    $rootScope.participants = [];
 
   // event.type должен быть keypress
   $scope.getChar = function (event, flag) {
-    // console.log(event)
+    // console.log(event);
     if (flag == 'letters') {
       if (event.which == null) { // IE
         if ((event.keyCode > 64 && event.keyCode < 91) || (event.keyCode > 96 && event.keyCode < 123) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode==45) || (event.keyCode==46) || (event.keyCode==37) || (event.keyCode==39)) return ; // буквы
@@ -37,16 +36,17 @@ angular.module('myApp.view1', ['ngRoute'])
       } else if ((event.which==8) || (event.keyCode==9) || (event.keyCode==46) || (event.keyCode==37) || (event.keyCode==39)){return;}
       return event.preventDefault(); // цифры
 
-    } else if (flag == 'street'){
+    } else if (flag == 'date'){
       if (event.which == null) { // IE
-        if ((event.keyCode >=1040 && event.keyCode <= 1103) ) return event.preventDefault(); // цифры, буквы, пробел, слэш, дефис
-        return;
+        if ((event.keyCode>47 && event.keyCode<58) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode==46) || (event.keyCode==37) || (event.keyCode==39)  || (event.keyCode==110) || (event.keyCode==190)) return; // цифры
+        return event.preventDefault()
       }
       if (event.which != 0 && event.charCode != 0) { // все кроме IE
-        if (event.which >= 1040 && event.which <= 1103 ) return event.preventDefault(); // цифры, буквы, пробел, слэш, дефис
-        return;
+        if ((event.which > 47 && event.which < 58) || (event.keyCode==46)) return; // цифры
+        return event.preventDefault();
       } else if ((event.which==8) || (event.keyCode==9) || (event.keyCode==46) || (event.keyCode==37) || (event.keyCode==39)){return;}
-      return event.preventDefault(); // цифры, буквы, пробел, слэш, дефис
+      return event.preventDefault(); // цифры и точка
+
     }
   };
 
@@ -72,29 +72,36 @@ angular.module('myApp.view1', ['ngRoute'])
             $scope.emailRequired = 'Mail Required';
         }
     };
-    $scope.validPhone = function() {
-        $scope.phoneRequired = '';
+    // $scope.validPhone = function() {
+    //     $scope.phoneRequired = '';
+    //
+    //     if (!$scope.regFormInfo.phone) {
+    //         $scope.phoneRequired = 'Phone Required';
+    //     }
+    // };
+    $scope.participants = [];
 
-        if (!$scope.regFormInfo.phone) {
-            $scope.phoneRequired = 'Password Required';
-        }
-    };
     $scope.addParticipant = function() {
-        console.log($scope.regFormInfo);
-        $rootScope.participants.push($scope.regFormInfo);
-        console.log($rootScope.participants);
-        var i;
-        var obj = new Object();
+      $scope.participants.push($scope.regFormInfo) ;
+      $scope.regFormInfo = {};
+      $scope.regForm.$setPristine();
+      $scope.regForm.$setUntouched();
+    };
 
-        for (i=0; i<$rootScope.participants.length; i++) {
-            obj.id = i+1;
-            obj.name = $rootScope.participants[i].name;
-            obj.surname = $rootScope.participants[i].surname;
-            obj.email = $rootScope.participants[i].email;
 
-        }
-        console.log(obj);
+    $scope.editParticipant = function() {
+      $scope.edit = !$scope.edit;
 
+
+    };
+
+    $scope.win = function() {
+      $scope.min = 0;
+      $scope.max = $scope.participants.length - 1;
+      $scope.rand = Math.floor(Math.random() * ($scope.max - $scope.min + 1)) + $scope.min;
+      $scope.winnerName = $scope.participants[$scope.rand].name;
+      $scope.winnerSurname = $scope.participants[$scope.rand].surname;
+      $scope.winnerId = $scope.rand + 1;
     };
 
 
